@@ -2,23 +2,25 @@ package com.tweetapp.user.domain;
 
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
-@Entity
+
 @Data
+@Document
 public class UserEntity implements UserDetails {
 
     @Id
-    private Long id;
+    private String id = UUID.randomUUID().toString();
 
     private String username;
     private String email;
