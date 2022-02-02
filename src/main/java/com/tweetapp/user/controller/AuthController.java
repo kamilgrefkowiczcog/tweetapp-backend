@@ -61,4 +61,10 @@ public class AuthController {
 
         return userService.registerNewUser(command);
     }
+
+
+    @GetMapping("test")
+    public String test() {
+        return "test";
+    }
 }

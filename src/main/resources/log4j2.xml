@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info" name="spring-boot-kafka-log" packages="com.tweetapp">
     <Appenders>
-        <Kafka name="Kafka" topic="first_topic">
+        <Kafka name="Kafka" topic="tweet_logs">
             <PatternLayout pattern="%date %message"/>
-            <Property name="bootstrap.servers">localhost:9092</Property>
+            <Property name="bootstrap.servers">localhost:29092</Property>
         </Kafka>
         <Async name="Async">
             <AppenderRef ref="Kafka"/>

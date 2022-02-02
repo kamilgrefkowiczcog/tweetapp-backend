@@ -34,3 +34,4 @@ build/
 
 ### secrety secrets ###
 application.properties
+application.yml
