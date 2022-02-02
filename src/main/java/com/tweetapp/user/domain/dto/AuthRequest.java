@@ -10,7 +10,7 @@ public class AuthRequest {
 
     @NotNull
     @Email
-    private String email;
+    private String username;
     @NotNull
     private String password;
 

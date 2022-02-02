@@ -23,7 +23,7 @@ public class UserEntity implements UserDetails {
     private String id = UUID.randomUUID().toString();
 
     private String username;
-    private String email;
+    private String displayName;
     private String password;
     private Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 

@@ -21,7 +21,7 @@ public class UserService {
     @Transactional
     public UserDto registerNewUser(RegisterCommand command) {
 
-        if (userRepository.findByEmail(command.getEmail()).isPresent()) {
+        if (userRepository.findByUsername(command.getUsername()).isPresent()) {
             throw new ValidationException("Username exists!");
         }
         if (!command.getPassword().equals(command.getRePassword())) {
@@ -36,7 +36,7 @@ public class UserService {
     private UserEntity createUser(RegisterCommand command) {
         UserEntity user = new UserEntity();
         user.setUsername(command.getUsername());
-        user.setEmail(command.getEmail());
+        user.setDisplayName(command.getDisplayName());
         user.setPassword(passwordEncoder.encode(command.getPassword()));
         user = userRepository.save(user);
         return user;

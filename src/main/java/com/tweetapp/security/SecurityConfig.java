@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(username -> userEntityRepository.findByEmail(username).orElseThrow());
+        auth.userDetailsService(username -> userEntityRepository.findByUsername(username).orElseThrow());
     }
 
     @Override

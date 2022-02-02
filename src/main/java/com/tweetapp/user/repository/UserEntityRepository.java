@@ -7,5 +7,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 
 public interface UserEntityRepository extends MongoRepository<UserEntity, String> {
-    Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByUsername(String username);
 }

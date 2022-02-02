@@ -10,9 +10,9 @@ public class RegisterCommand {
 
     @NotBlank
     @Email
-    String email;
-    @NotBlank
     String username;
+    @NotBlank
+    String displayName;
     @NotBlank
     String password;
     @NotBlank
