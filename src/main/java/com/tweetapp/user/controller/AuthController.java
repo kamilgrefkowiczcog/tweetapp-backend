@@ -4,13 +4,11 @@ import com.tweetapp.security.JwtTokenUtil;
 import com.tweetapp.user.domain.UserEntity;
 import com.tweetapp.user.domain.dto.AuthRequest;
 import com.tweetapp.user.domain.dto.RegisterCommand;
-import com.tweetapp.user.domain.dto.UserDto;
+import com.tweetapp.user.domain.dto.AuthResponse;
+import com.tweetapp.user.domain.dto.RegisterResponse;
 import com.tweetapp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,9 +30,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("login")
-    public ResponseEntity<UserDto> login(@RequestBody @Valid AuthRequest request) {
-
-        log.info("HELLO");
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request) {
 
         try {
             Authentication authenticate = authenticationManager
@@ -44,12 +40,9 @@ public class AuthController {
 
             UserEntity user = (UserEntity) authenticate.getPrincipal();
 
+            String jwt = jwtTokenUtil.generateAccessToken(user);
             return ResponseEntity.ok()
-                    .header(
-                            HttpHeaders.AUTHORIZATION,
-                            jwtTokenUtil.generateAccessToken(user)
-                    )
-                    .body(new UserDto(user.getUsername()));
+                    .body(new AuthResponse(user.getUsername(), jwt, jwtTokenUtil.getExpirationDate(jwt)));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -57,7 +50,7 @@ public class AuthController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto register(@RequestBody @Valid RegisterCommand command) {
+    public RegisterResponse register(@RequestBody @Valid RegisterCommand command) {
 
         return userService.registerNewUser(command);
     }

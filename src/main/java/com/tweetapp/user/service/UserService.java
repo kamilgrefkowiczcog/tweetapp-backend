@@ -2,7 +2,7 @@ package com.tweetapp.user.service;
 
 import com.tweetapp.user.domain.UserEntity;
 import com.tweetapp.user.domain.dto.RegisterCommand;
-import com.tweetapp.user.domain.dto.UserDto;
+import com.tweetapp.user.domain.dto.RegisterResponse;
 import com.tweetapp.user.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +19,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserDto registerNewUser(RegisterCommand command) {
+    public RegisterResponse registerNewUser(RegisterCommand command) {
 
         if (userRepository.findByUsername(command.getUsername()).isPresent()) {
             throw new ValidationException("Username exists!");
@@ -30,7 +30,7 @@ public class UserService {
 
         UserEntity user = createUser(command);
 
-        return new UserDto(user.getUsername());
+        return new RegisterResponse(user.getUsername());
     }
 
     private UserEntity createUser(RegisterCommand command) {
