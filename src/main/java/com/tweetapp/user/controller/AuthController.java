@@ -2,10 +2,7 @@ package com.tweetapp.user.controller;
 
 import com.tweetapp.security.JwtTokenUtil;
 import com.tweetapp.user.domain.UserEntity;
-import com.tweetapp.user.domain.dto.AuthRequest;
-import com.tweetapp.user.domain.dto.RegisterCommand;
-import com.tweetapp.user.domain.dto.AuthResponse;
-import com.tweetapp.user.domain.dto.RegisterResponse;
+import com.tweetapp.user.domain.dto.*;
 import com.tweetapp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,9 +47,14 @@ public class AuthController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public RegisterResponse register(@RequestBody @Valid RegisterCommand command) {
+    public RegisterResponse register(@RequestBody @Valid RegisterRequest request) {
 
-        return userService.registerNewUser(command);
+        return userService.registerNewUser(request);
+    }
+
+    @PostMapping("reset-password")
+    public ResetPasswordResponse resetPassword(@RequestBody @Valid ResetPasswordRequest request){
+        return userService.resetPassword(request);
     }
 
 

@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Value
-public class RegisterCommand {
+public class RegisterRequest {
 
     @NotBlank
     @Email
