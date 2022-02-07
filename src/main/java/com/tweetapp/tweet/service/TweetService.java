@@ -1,6 +1,7 @@
 package com.tweetapp.tweet.service;
 
 import com.tweetapp.tweet.domain.Tweet;
+import com.tweetapp.tweet.domain.TweetMapper;
 import com.tweetapp.tweet.domain.dto.NewTweetRequest;
 import com.tweetapp.tweet.domain.dto.TweetDto;
 import com.tweetapp.tweet.repository.TweetRepository;
@@ -25,36 +26,39 @@ public class TweetService {
     @Transactional
     public TweetDto createTweet(NewTweetRequest request, String username) {
 
-        Tweet tweet = mapToTweet(request, username);
+        UserEntity user = userEntityRepository.findByUsername(username).orElseThrow();
+        Tweet tweet = mapToTweet(request, user);
         tweetRepository.save(tweet);
-        return mapToDto(tweet);
+        userEntityRepository.save(user);
+        return TweetMapper.mapToDto(tweet);
     }
 
     @Transactional
     public List<TweetDto> getAllTweets() {
         return tweetRepository.findAll(Sort.by("createdDate").descending())
-                .stream().map(this::mapToDto)
+                .stream().map(TweetMapper::mapToDto)
                 .toList();
     }
 
-    private Tweet mapToTweet(NewTweetRequest request, String username) {
+    private Tweet mapToTweet(NewTweetRequest request, UserEntity user) {
         Tweet tweet = new Tweet();
-        tweet.setAuthor(userEntityRepository.findByUsername(username).orElseThrow());
+        tweet.setAuthor(user);
         tweet.setText(request.getText());
         return tweet;
     }
 
-    private TweetDto mapToDto(Tweet tweet) {
-        return new TweetDto(tweet.getId(), tweet.getText(), tweet.getCreatedDate(), tweet.getAuthor().getId(), tweet.getAuthor().getDisplayName(), tweet.getLikedBy().size());
-    }
+
 
     @Transactional
     public TweetDto likeTweet(String tweetId, String username) {
+
         Tweet tweet = tweetRepository.findById(tweetId).orElseThrow();
+        UserEntity user = userEntityRepository.findByUsername(username).orElseThrow();
+        tweet.like(user);
 
-        tweet.like(userEntityRepository.findByUsername(username).orElseThrow());
-
-        return mapToDto(tweetRepository.save(tweet));
+        tweetRepository.save(tweet);
+        userEntityRepository.save(user);
+        return TweetMapper.mapToDto(tweet);
 
     }
 }

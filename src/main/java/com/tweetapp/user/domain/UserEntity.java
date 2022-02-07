@@ -25,7 +25,7 @@ public class UserEntity implements UserDetails {
     private String displayName;
     private String password;
 
-    @DocumentReference
+    @DocumentReference(lazy = true)
     private Set<Tweet> authoredTweets;
 
     @DocumentReference(lazy = true)

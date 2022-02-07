@@ -1,10 +1,10 @@
 package com.tweetapp.user.service;
 
+import com.tweetapp.tweet.domain.Tweet;
+import com.tweetapp.tweet.domain.TweetMapper;
+import com.tweetapp.tweet.domain.dto.TweetDto;
 import com.tweetapp.user.domain.UserEntity;
-import com.tweetapp.user.domain.dto.RegisterRequest;
-import com.tweetapp.user.domain.dto.RegisterResponse;
-import com.tweetapp.user.domain.dto.ResetPasswordRequest;
-import com.tweetapp.user.domain.dto.ResetPasswordResponse;
+import com.tweetapp.user.domain.dto.*;
 import com.tweetapp.user.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ValidationException;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,5 +69,14 @@ public class UserService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
+    }
+
+    public FullUserDto getCurrentUser(String username) {
+        UserEntity user = userRepository.findByUsername(username).orElseThrow();
+        return mapToFullUserDto(user);
+    }
+
+    private FullUserDto mapToFullUserDto(UserEntity user) {
+        return new FullUserDto(user.getUsername(), user.getDisplayName(), user.getLikedTweets().stream().map(Tweet::getId).collect(Collectors.toSet()), user.getAuthoredTweets().stream().map(TweetMapper::mapToDto).collect(Collectors.toSet()));
     }
 }
