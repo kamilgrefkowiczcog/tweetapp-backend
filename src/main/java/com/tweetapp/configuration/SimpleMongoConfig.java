@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.Collections;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "com.tweetapp.user.repository")
+@EnableMongoRepositories(basePackages = "com.tweetapp")
 public class SimpleMongoConfig {
 
     @Value("${mongo.connection-string}")

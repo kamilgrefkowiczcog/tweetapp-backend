@@ -20,7 +20,7 @@ import java.util.UUID;
 public class UserEntity implements UserDetails {
 
     @Id
-    private String id = UUID.randomUUID().toString();
+    private String id;
 
     private String username;
     private String displayName;
