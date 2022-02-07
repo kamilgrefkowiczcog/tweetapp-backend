@@ -13,4 +13,5 @@ public class TweetDto {
 
     String authorId;
     String authorDisplayName;
+    Integer likes;
 }

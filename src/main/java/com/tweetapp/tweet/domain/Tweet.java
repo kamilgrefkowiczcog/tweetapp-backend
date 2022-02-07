@@ -8,9 +8,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.web.SortDefault;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Document
 @Data
@@ -24,6 +24,19 @@ public class Tweet {
     @DocumentReference(lazy = true)
     private UserEntity author;
 
+    @DocumentReference(lazy = true)
+    private Set<UserEntity> likedBy = new HashSet<>();
+
     @CreatedDate
     private Date createdDate;
+
+    public void like(UserEntity user) {
+        likedBy.add(user);
+        user.getLikedTweets().add(this);
+    }
+
+    public void setAuthor(UserEntity author) {
+        this.author = author;
+        author.getAuthoredTweets().add(this);
+    }
 }
