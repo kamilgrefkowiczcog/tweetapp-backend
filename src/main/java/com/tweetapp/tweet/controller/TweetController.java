@@ -30,6 +30,12 @@ public class TweetController {
         return tweetService.getAllTweets();
     }
 
+    @GetMapping("/{displayName}")
+    public List<TweetDto> getAllTweetsByDisplayName(@PathVariable String displayName) {
+        return tweetService.getTweetsByUser(displayName);
+    }
+
+
     @PostMapping("/{tweetId}/like")
     public TweetDto likeTweet(@PathVariable String tweetId, Principal principal) {
 

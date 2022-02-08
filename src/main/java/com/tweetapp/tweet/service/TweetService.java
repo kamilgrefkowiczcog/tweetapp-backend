@@ -42,13 +42,18 @@ public class TweetService {
                 .toList();
     }
 
+    @Transactional
+    public List<TweetDto> getTweetsByUser(String displayName) {
+        UserEntity user = userEntityRepository.findByDisplayName(displayName).orElseThrow();
+        return user.getAuthoredTweets().stream().map(TweetMapper::tweetToDto).toList();
+    }
+
     private Tweet mapToTweet(NewTweetRequest request, UserEntity user) {
         Tweet tweet = new Tweet();
         tweet.setAuthor(user);
         tweet.setText(request.getText());
         return tweet;
     }
-
 
 
     @Transactional
@@ -83,4 +88,6 @@ public class TweetService {
         comment.setText(request.getText());
         return comment;
     }
+
+
 }
