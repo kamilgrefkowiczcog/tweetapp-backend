@@ -30,6 +30,9 @@ public class Tweet {
     @CreatedDate
     private Date createdDate;
 
+    @DocumentReference(lazy = true)
+    private Set<Comment> comments = new HashSet<>();
+
     public void like(UserEntity user) {
         likedBy.add(user);
         user.getLikedTweets().add(this);
@@ -38,5 +41,10 @@ public class Tweet {
     public void setAuthor(UserEntity author) {
         this.author = author;
         author.getAuthoredTweets().add(this);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setTweet(this);
     }
 }

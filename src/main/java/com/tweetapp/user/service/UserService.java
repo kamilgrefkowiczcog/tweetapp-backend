@@ -1,8 +1,6 @@
 package com.tweetapp.user.service;
 
-import com.tweetapp.tweet.domain.Tweet;
-import com.tweetapp.tweet.domain.TweetMapper;
-import com.tweetapp.tweet.domain.dto.TweetDto;
+import com.tweetapp.tweet.domain.mapper.TweetMapper;
 import com.tweetapp.user.domain.UserEntity;
 import com.tweetapp.user.domain.dto.*;
 import com.tweetapp.user.repository.UserEntityRepository;
@@ -77,6 +75,6 @@ public class UserService {
     }
 
     private FullUserDto mapToFullUserDto(UserEntity user) {
-        return new FullUserDto(user.getId(), user.getUsername(), user.getDisplayName(), user.getAuthoredTweets().stream().map(TweetMapper::mapToDto).collect(Collectors.toSet()));
+        return new FullUserDto(user.getId(), user.getUsername(), user.getDisplayName(), user.getAuthoredTweets().stream().map(TweetMapper::tweetToDto).collect(Collectors.toSet()));
     }
 }

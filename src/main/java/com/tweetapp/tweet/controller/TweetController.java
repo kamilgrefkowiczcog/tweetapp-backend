@@ -1,5 +1,6 @@
 package com.tweetapp.tweet.controller;
 
+import com.tweetapp.tweet.domain.dto.CommentRequest;
 import com.tweetapp.tweet.domain.dto.NewTweetRequest;
 import com.tweetapp.tweet.domain.dto.TweetDto;
 import com.tweetapp.tweet.service.TweetService;
@@ -29,9 +30,16 @@ public class TweetController {
         return tweetService.getAllTweets();
     }
 
-    @PostMapping("/like/{tweetId}")
+    @PostMapping("/{tweetId}/like")
     public TweetDto likeTweet(@PathVariable String tweetId, Principal principal) {
 
         return tweetService.likeTweet(tweetId, principal.getName());
+    }
+
+    @PostMapping("/{tweetId}/comment")
+    public TweetDto commentTweet(@PathVariable String tweetId, @Valid @RequestBody CommentRequest request, Principal principal) {
+
+
+        return tweetService.commentTweet(tweetId, request, principal.getName());
     }
 }
