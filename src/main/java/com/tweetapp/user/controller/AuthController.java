@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("reset-password")
-    public ResetPasswordResponse resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
+    public ResetPasswordResponse resetPassword(@RequestBody @Valid ResetPasswordRequest request){
         return userService.resetPassword(request);
     }
 

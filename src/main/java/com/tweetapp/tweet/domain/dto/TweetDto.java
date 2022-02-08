@@ -3,6 +3,7 @@ package com.tweetapp.tweet.domain.dto;
 import lombok.Value;
 
 import java.util.Date;
+import java.util.List;
 
 @Value
 public class TweetDto {
@@ -13,5 +14,5 @@ public class TweetDto {
 
     String authorId;
     String authorDisplayName;
-    Integer likes;
+    List<String> likedBy;
 }

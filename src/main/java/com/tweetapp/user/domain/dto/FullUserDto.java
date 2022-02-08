@@ -8,8 +8,8 @@ import java.util.Set;
 @Value
 public class FullUserDto {
 
+    String userId;
     String username;
     String displayName;
-    Set<String> likedTweets;
     Set<TweetDto> authoredTweets;
 }

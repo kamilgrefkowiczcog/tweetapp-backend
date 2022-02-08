@@ -77,6 +77,6 @@ public class UserService {
     }
 
     private FullUserDto mapToFullUserDto(UserEntity user) {
-        return new FullUserDto(user.getUsername(), user.getDisplayName(), user.getLikedTweets().stream().map(Tweet::getId).collect(Collectors.toSet()), user.getAuthoredTweets().stream().map(TweetMapper::mapToDto).collect(Collectors.toSet()));
+        return new FullUserDto(user.getId(), user.getUsername(), user.getDisplayName(), user.getAuthoredTweets().stream().map(TweetMapper::mapToDto).collect(Collectors.toSet()));
     }
 }
