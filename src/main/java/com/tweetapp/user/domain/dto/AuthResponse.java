@@ -13,5 +13,6 @@ public class AuthResponse {
      String jwt;
      Date expiresAt;
 
+     FullUserDto userData;
 
 }

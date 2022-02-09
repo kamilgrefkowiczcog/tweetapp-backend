@@ -3,6 +3,7 @@ package com.tweetapp.user.service;
 import com.tweetapp.tweet.domain.mapper.TweetMapper;
 import com.tweetapp.user.domain.UserEntity;
 import com.tweetapp.user.domain.dto.*;
+import com.tweetapp.user.domain.mapper.UserMapper;
 import com.tweetapp.user.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,10 +72,8 @@ public class UserService {
 
     public FullUserDto getCurrentUser(String username) {
         UserEntity user = userRepository.findByUsername(username).orElseThrow();
-        return mapToFullUserDto(user);
+        return UserMapper.mapToFullUserDto(user);
     }
 
-    private FullUserDto mapToFullUserDto(UserEntity user) {
-        return new FullUserDto(user.getId(), user.getUsername(), user.getDisplayName(), user.getAuthoredTweets().stream().map(TweetMapper::tweetToDto).collect(Collectors.toSet()));
-    }
+
 }

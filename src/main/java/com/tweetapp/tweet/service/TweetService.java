@@ -1,5 +1,6 @@
 package com.tweetapp.tweet.service;
 
+import com.tweetapp.exception.UnauthorizedException;
 import com.tweetapp.tweet.domain.Comment;
 import com.tweetapp.tweet.domain.Tweet;
 import com.tweetapp.tweet.domain.dto.CommentRequest;
@@ -90,4 +91,12 @@ public class TweetService {
     }
 
 
+    public void deleteTweet(String tweetId, String username) {
+        Tweet tweet = tweetRepository.findById(tweetId).orElseThrow();
+        if (!tweet.getAuthor().getUsername().equals(username)) {
+            throw new UnauthorizedException("You cannot delete what you don't own");
+        }
+        
+        tweetRepository.delete(tweet);
+    }
 }

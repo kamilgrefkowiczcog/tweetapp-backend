@@ -6,10 +6,12 @@ import com.tweetapp.tweet.domain.dto.CommentDto;
 import com.tweetapp.tweet.domain.dto.TweetDto;
 import com.tweetapp.user.domain.UserEntity;
 
+import java.util.stream.Collectors;
+
 public class TweetMapper {
 
     public static TweetDto tweetToDto(Tweet tweet) {
-        return new TweetDto(tweet.getId(), tweet.getText(), tweet.getCreatedDate(), tweet.getAuthor().getId(), tweet.getAuthor().getDisplayName(), tweet.getLikedBy().stream().map(UserEntity::getId).toList(), tweet.getComments().stream().map(TweetMapper::commentToDto).toList());
+        return new TweetDto(tweet.getId(), tweet.getText(), tweet.getCreatedDate(), tweet.getAuthor().getId(), tweet.getAuthor().getDisplayName(), tweet.getLikedBy().stream().map(UserEntity::getId).collect(Collectors.toSet()), tweet.getComments().stream().map(TweetMapper::commentToDto).toList());
     }
 
     public static CommentDto commentToDto (Comment comment) {

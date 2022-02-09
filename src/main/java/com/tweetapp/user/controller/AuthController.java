@@ -3,6 +3,7 @@ package com.tweetapp.user.controller;
 import com.tweetapp.security.JwtTokenUtil;
 import com.tweetapp.user.domain.UserEntity;
 import com.tweetapp.user.domain.dto.*;
+import com.tweetapp.user.domain.mapper.UserMapper;
 import com.tweetapp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class AuthController {
 
             String jwt = jwtTokenUtil.generateAccessToken(user);
             return ResponseEntity.ok()
-                    .body(new AuthResponse(user.getUsername(), jwt, jwtTokenUtil.getExpirationDate(jwt)));
+                    .body(new AuthResponse(user.getUsername(), jwt, jwtTokenUtil.getExpirationDate(jwt), UserMapper.mapToFullUserDto(user)));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

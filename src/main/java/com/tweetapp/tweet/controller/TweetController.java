@@ -6,6 +6,7 @@ import com.tweetapp.tweet.domain.dto.TweetDto;
 import com.tweetapp.tweet.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -47,5 +48,10 @@ public class TweetController {
 
 
         return tweetService.commentTweet(tweetId, request, principal.getName());
+    }
+    @DeleteMapping("/{tweetId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTweet(@PathVariable String tweetId, Principal principal) {
+        this.tweetService.deleteTweet(tweetId, principal.getName());
     }
 }

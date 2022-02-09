@@ -5,6 +5,7 @@ import lombok.Value;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Value
 public class TweetDto {
@@ -15,6 +16,6 @@ public class TweetDto {
 
     String authorId;
     String authorDisplayName;
-    List<String> likedBy;
+    Set<String> likedBy;
     List<CommentDto> comments;
 }
