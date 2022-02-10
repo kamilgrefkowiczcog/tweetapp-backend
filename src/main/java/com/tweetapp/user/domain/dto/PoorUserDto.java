@@ -3,8 +3,8 @@ package com.tweetapp.user.domain.dto;
 import lombok.Value;
 
 @Value
-public class UserDisplayDto {
+public class PoorUserDto {
 
-    String userId;
     String displayName;
+    Integer authoredTweetsNumber;
 }

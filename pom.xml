@@ -15,13 +15,20 @@
     <description>tweeter clone</description>
     <properties>
         <java.version>17</java.version>
+        <springfox.swagger.ui.version>3.0.0</springfox.swagger.ui.version>
+
     </properties>
     <dependencies>
 
 
 
+<!--documentation -->
 
-
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.6</version>
+        </dependency>
 
 <!--        actuator    -->
 
@@ -82,6 +89,10 @@
             <version>2.3.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
 <!--        core-->
 
@@ -90,10 +101,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

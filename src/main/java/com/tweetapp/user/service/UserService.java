@@ -1,18 +1,27 @@
 package com.tweetapp.user.service;
 
-import com.tweetapp.tweet.domain.mapper.TweetMapper;
 import com.tweetapp.user.domain.UserEntity;
 import com.tweetapp.user.domain.dto.*;
 import com.tweetapp.user.domain.mapper.UserMapper;
 import com.tweetapp.user.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.servlets.DefaultServlet;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.SortOperation;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ValidationException;
+import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +82,23 @@ public class UserService {
     public FullUserDto getCurrentUser(String username) {
         UserEntity user = userRepository.findByUsername(username).orElseThrow();
         return UserMapper.mapToFullUserDto(user);
+    }
+
+    @Transactional
+    public List<PoorUserDto> findByPartialUsername(String partialUsername) {
+        return userRepository.findAllByUsername(partialUsername).stream().map(this::mapToPoorUser).toList();
+    }
+
+
+    public List<PoorUserDto> getAllUsers() {
+
+        return userRepository.findAllOrderByAuthoredTweetsCount().stream().map(this::mapToPoorUser).toList();
+
+
+    }
+
+    private PoorUserDto mapToPoorUser(UserEntity user) {
+        return new PoorUserDto(user.getDisplayName(), user.getAuthoredTweets().size());
     }
 
 
