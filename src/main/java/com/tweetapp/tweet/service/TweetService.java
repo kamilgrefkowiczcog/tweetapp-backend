@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -46,7 +47,11 @@ public class TweetService {
     @Transactional
     public List<TweetDto> getTweetsByUser(String displayName) {
         UserEntity user = userEntityRepository.findByDisplayName(displayName).orElseThrow();
-        return user.getAuthoredTweets().stream().map(TweetMapper::tweetToDto).toList();
+        return user.getAuthoredTweets().stream()
+                .map(TweetMapper::tweetToDto)
+                .sorted(Comparator.comparing(TweetDto::getCreatedAt)
+                        .reversed())
+                .toList();
     }
 
     private Tweet mapToTweet(NewTweetRequest request, UserEntity user) {
@@ -96,7 +101,7 @@ public class TweetService {
         if (!tweet.getAuthor().getUsername().equals(username)) {
             throw new UnauthorizedException("You cannot delete what you don't own");
         }
-        
+
         tweetRepository.delete(tweet);
     }
 }

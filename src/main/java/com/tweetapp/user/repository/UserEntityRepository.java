@@ -19,9 +19,10 @@ public interface UserEntityRepository extends MongoRepository<UserEntity, String
 
     Optional<UserEntity> findByDisplayName(String displayName);
 
-    @Aggregation(pipeline = {"{$addFields : {numberOfTweets : {$size : '$authoredTweets'}}}", "{$sort : {numberOfTweets : -1}}"})
-    List<UserEntity> findAllOrderByAuthoredTweetsCount();
+    @Aggregation(pipeline = { "{$match: {'displayName': {$regex : ?0}}}", "{$addFields : {numberOfTweets : {$size : { $ifNull : [$authoredTweets, []]}}}}", "{$sort : {numberOfTweets : -1}}"})
+    List<UserEntity> findAllByPartialUsername(String partialUsername);
 
-    @Query("{username: {$regex : ?0}}")
-    List<UserEntity> findAllByUsername(String partialUsername);
+    @Aggregation(pipeline = {"{$addFields : {numberOfTweets : {$size : { $ifNull : [$authoredTweets, []]}}}}", "{$sort : {numberOfTweets : -1}}"})
+    List<UserEntity> findAll();
+
 }

@@ -86,13 +86,13 @@ public class UserService {
 
     @Transactional
     public List<PoorUserDto> findByPartialUsername(String partialUsername) {
-        return userRepository.findAllByUsername(partialUsername).stream().map(this::mapToPoorUser).toList();
+        return userRepository.findAllByPartialUsername(partialUsername).stream().map(this::mapToPoorUser).toList();
     }
 
 
     public List<PoorUserDto> getAllUsers() {
 
-        return userRepository.findAllOrderByAuthoredTweetsCount().stream().map(this::mapToPoorUser).toList();
+        return userRepository.findAll().stream().map(this::mapToPoorUser).toList();
 
 
     }
