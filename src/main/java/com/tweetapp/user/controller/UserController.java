@@ -4,7 +4,6 @@ import com.tweetapp.user.domain.dto.FullUserDto;
 import com.tweetapp.user.domain.dto.PoorUserDto;
 import com.tweetapp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

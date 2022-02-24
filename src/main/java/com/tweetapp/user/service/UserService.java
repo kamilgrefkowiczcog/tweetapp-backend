@@ -5,14 +5,6 @@ import com.tweetapp.user.domain.dto.*;
 import com.tweetapp.user.domain.mapper.UserMapper;
 import com.tweetapp.user.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.servlets.DefaultServlet;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.GroupOperation;
-import org.springframework.data.mongodb.core.aggregation.SortOperation;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.ValidationException;
 import java.util.List;
 import java.util.Random;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service
 @RequiredArgsConstructor
