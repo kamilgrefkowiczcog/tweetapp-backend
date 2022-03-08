@@ -24,6 +24,8 @@ public class UserService {
     @Transactional
     public RegisterResponse registerNewUser(RegisterRequest command) {
 
+
+
         if (userRepository.findByUsername(command.getUsername()).isPresent()) {
             throw new ValidationException("Username exists!");
         }
